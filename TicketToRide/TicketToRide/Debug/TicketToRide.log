@@ -1,0 +1,9 @@
+﻿  frmJuego.cpp
+c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\frmJuego.h(106): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\frmJuego.h(127): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\frmJuego.h(132): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\frmJuego.h(149): warning C4018: '<': signed/unsigned mismatch
+c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\frmJuego.h(163): warning C4018: '<': signed/unsigned mismatch
+  ArchiveManager.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\Debug\TicketToRide.exe
+  TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\Debug\TicketToRide.pdb (Partial PDB)
