@@ -138,8 +138,10 @@ namespace TicketToRide {
 
 	//funcion para poblar la pila de caminos a seguir
 	void poner_camino(stack<ii>*st, int t, vector<int>links) {
-		if (t == -1)
+		if (t == -1) {
+			st->pop();
 			return;
+		}
 		st->push({ links[t],t });
 		poner_camino(st, links[t], links);
 	}
@@ -147,8 +149,8 @@ namespace TicketToRide {
 	string obtener_colores(int u, int v, Graph _grafo,int jugador) {
 		string r = "";
 		for (int i = 0; i < _grafo[u].size(); i++) {
-			if (_grafo[u][i].est_llegada == v &&(_grafo[u][i].dueño==0||_grafo[u][i].dueño==jugador/*este uno se reemplazaria dependiendo del juegador que llame a la funcion*/)) {
-				r += " "+_grafo[u][i].color + " ||";
+			if (_grafo[u][i].est_llegada == v &&(_grafo[u][i].dueño==0||_grafo[u][i].dueño==jugador)) {
+				r += ""+_grafo[u][i].color + "||";
 			}
 		}
 		if (!r.empty()) {
@@ -168,6 +170,78 @@ namespace TicketToRide {
 		}
 		return p;
 	}
+	vector<string> split(const string& str, const string& delim)
+	{
+		vector<string> tokens;
+		size_t prev = 0, pos = 0;
+		do
+		{
+			pos = str.find(delim, prev);
+			if (pos == string::npos) pos = str.length();
+			string token = str.substr(prev, pos - prev);
+			if (!token.empty()) tokens.push_back(token);
+			prev = pos + delim.length();
+		} while (pos < str.length() && prev < str.length());
+		return tokens;
+	}
+	//saber cuantas cartas de un determinado color tiene
+	int mirarmano(string color) {
+		int cont = 0;
+		//Luego reemplazar este string por el arreglo de manos
+		vector < string > s= {"Yellow", "Yellow", "Green","Blue","Blue"};
+		for (int i = 0; i < s.size();i++) {
+			if (s.at(i) == color)
+				cont++;
+		}
+		return cont;
+	}
+	//funcion que retorna inicializa un vector con los pesos de los caminos, el color y el puntaje de prioridad
+	priority_queue<Camino> obtener_Pesos_Costos(stack<ii>ss,vector<Estacion>estaciones,Graph grafo,int dueño) {
+		priority_queue<Camino> pq_caminos;
+		int size = ss.size();
+		//impresion de caminos(sujeta a cambios)
+		for (int i = 0; i < size; i++) {
+			auto aux = ss.top(); ss.pop();
+			int u = estaciones[aux.first].index;
+			int v = estaciones[aux.second].index;
+			string colors = obtener_colores(u, v, grafo, 1);//falta marcar que rutas ya tienes despues de ejecutar el djikstra
+			String^estacion1 = gcnew String(estaciones[aux.first].nombre.c_str());
+			String^estacion2 = gcnew String(estaciones[aux.second].nombre.c_str());
+			auto vcolors = split(colors, "||");
+			bool completado=false;
+			for each (auto c in vcolors)
+			{
+				int pesoaux = peso(u, v, grafo);
+				int cartas_mano_color = mirarmano(c) + 1;
+				if (cartas_mano_color - 1 == pesoaux) {
+					completado = true;
+				}
+			}
+
+			for each (auto c in vcolors)
+			{
+				Camino newCami;
+				newCami.color = c;
+				newCami.est_salida = u;
+				newCami.est_llegada = v;
+				int pesoaux = peso(u, v, grafo);
+				newCami.peso = pesoaux;
+				int cartas_mano_color=mirarmano(c)+1;
+				double razon = 1;
+				if (c.compare("Any")==0)
+					razon = 2;
+				newCami.prioridad = (1 / pow((double)vcolors.size(),3))*
+									(1 / (double) pesoaux)*
+									((double) cartas_mano_color)*
+									(1/razon)*
+									(!completado);//descartar rutas que ya has completado en tu mano y aun
+				pq_caminos.push(newCami);
+			}
+		}
+		return pq_caminos;
+	}
+
+	//void priorizar caminos
 	private: System::Void frmJuego_Load(System::Object^  sender, System::EventArgs^  e) {
 		//Clase que permite la lectura de archivos
 		ArchiveManager archm;
@@ -183,8 +257,10 @@ namespace TicketToRide {
 		vector<int>links = vector<int>(nEstaciones, -1);
 		//Prueba de asignar un riel a jugador para ver si cambia el camino mas corto
 		string a = "Any";
-		AsignarRielJugador(&grafo,2, 33, "Any", 2);
-		AsignarRielJugador(&grafo, 31, 9, "Yellow", 2);
+		
+		/*AsignarRielJugador(&grafo,2, 33, "Any", 2);
+		AsignarRielJugador(&grafo, 31, 9, "Yellow", 2);*/
+		AsignarRielJugador(&grafo, 26, 11, "Pink", 1);
 		//vertices de inicio y salida
 		int s = 0; int t = 33;
 		Djkstra(grafo, s, &links,1);
@@ -193,9 +269,10 @@ namespace TicketToRide {
 		st.push({ links[t],t });
 		//llenamos la pila
 		poner_camino(&st, links[t], links);
-		st.pop();
 		//Genera el string con las respuestas
 		String^resp = "";
+		auto pq = obtener_Pesos_Costos(st, estaciones, grafo,1);
+		pq.pop();
 		int size = st.size();
 		//impresion de caminos(sujeta a cambios)
 		for (int i = 0; i < size; i++) {
@@ -208,6 +285,7 @@ namespace TicketToRide {
 			resp += "[Camino " + (i + 1) + ": " + estacion1 + "-" + estacion2 + "] [Peso: " + peso(u, v, grafo) +
 				"] [Colores:" + colors + "]" + Environment::NewLine;
 		}
+		
 		auto frm = gcnew Result(resp);
 		frm->Show();
 	}

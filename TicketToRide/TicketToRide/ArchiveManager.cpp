@@ -30,7 +30,7 @@ int ArchiveManager::Load_Estaciones(vector<Estacion>* _estaciones)
 	arch.close();
 	return _estaciones->size();
 }
-vector<string> split(const string& str, const string& delim)
+vector<string> ArchiveManager::split(const string& str, const string& delim)
 {
 	vector<string> tokens;
 	size_t prev = 0, pos = 0;
@@ -62,6 +62,7 @@ void ArchiveManager::Load_Grafo(vector<vector<Camino>> *_grafo, int nEstaciones)
 			if (aux == "----") { i++; continue; }
 			vector<string> cams = split(aux, "||");
 			for (int k = 1; k < cams.size(); k++) {
+				cam.est_salida = j;
 				cam.est_llegada = i;
 				cam.peso = atoi(cams[0].c_str());
 				cam.color = cams[k];

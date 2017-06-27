@@ -16,5 +16,6 @@ public:
 	~ArchiveManager();
 	int Load_Estaciones(vector<Estacion>* _estaciones);
 	void Load_Grafo(vector<vector<Camino>> *_grafo, int nEstaciones);
+	vector<string> static split(const string& str, const string& delim);
 };
 
