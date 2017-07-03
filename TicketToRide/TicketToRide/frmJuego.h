@@ -7,6 +7,7 @@
 #include <functional>
 #include <stack>
 #include <algorithm>
+#include <utility>
 namespace TicketToRide {
 
 	using namespace System;
@@ -100,17 +101,16 @@ namespace TicketToRide {
 		//Test
 		JuegoC *objControlador = new JuegoC();
 		//Prueba de asignar un riel a jugador para ver si cambia el camino mas corto
-		objControlador->asignarRielJugador(2, 33, "Any", 2);
-		objControlador->asignarRielJugador(31, 9, "Yellow", 2);
+		objControlador->asignarRielJugador(2, 33, Colores::Any, 2);
+		objControlador->asignarRielJugador(31, 9, Colores::Yellow, 2);
 		objControlador->obtnerRuta(0, 33);
 		//vertices de inicio y salida
 		
 		
-		auto pq = objControlador->obtener_Pesos_Costos();
+		auto pq = objControlador->priorizarCaminos();
 		//pq.pop();
 		//Genera el string con las respuestas
 		String^resp = objControlador->generarStringCaminos();
-		
 		auto frm = gcnew Result(resp);
 		frm->Show();
 	}

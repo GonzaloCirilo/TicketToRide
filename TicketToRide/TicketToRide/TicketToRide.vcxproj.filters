@@ -27,6 +27,15 @@
     <ClCompile Include="JuegoC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Structs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Riel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Carta.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="frmJuego.h">
@@ -42,6 +51,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JuegoC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Riel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Carta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

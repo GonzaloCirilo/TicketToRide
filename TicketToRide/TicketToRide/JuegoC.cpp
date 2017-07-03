@@ -6,7 +6,22 @@ const int PLAYER = 2;
 
 JuegoC::JuegoC()
 {
-	ManoIA= { "Yellow", "Yellow", "Green","Blue","Blue" };
+	dictionary.insert(make_pair(Colores::Any, 0));
+	dictionary.insert(make_pair(Colores::Black, 1));
+	dictionary.insert(make_pair(Colores::Blue, 2));
+	dictionary.insert(make_pair(Colores::Green, 3));
+	dictionary.insert(make_pair(Colores::Orange, 4));
+	dictionary.insert(make_pair(Colores::Pink, 5));
+	dictionary.insert(make_pair(Colores::Red, 6));
+	dictionary.insert(make_pair(Colores::White, 7));
+	dictionary.insert(make_pair(Colores::Yellow, 8));
+	Random r;
+	ManoIA = { 8, 8, 3,1,1 };
+	CartasenMesa = { 6,7,2,2 };
+	CartasenMesa =vector<int>(5);
+	for (int i = 0; i < CartasenMesa.size(); i++) {
+		CartasenMesa[0] = r.Next(9);
+	}
 	ArchiveManager archm;
 	//Carga Estaciones
 	this->estaciones = vector<Estacion>();
@@ -20,6 +35,7 @@ JuegoC::JuegoC()
 JuegoC::~JuegoC()
 {
 }
+
 void JuegoC::obtnerRuta(int s,int t) {
 	links = vector<int>(nEstaciones, -1);
 	//int s = 0; int t = 33;
@@ -100,7 +116,7 @@ string JuegoC::obtenerColoresDeCamino(int u, int v, int jugador) {
 	}
 	return r;
 }
-//puede variar
+//Obtiene el peso de la arista
 int JuegoC::peso(int u, int v) {
 	int p;
 	for (int i = 0; i < grafo[u].size(); i++) {
@@ -128,15 +144,19 @@ vector<string> JuegoC::split(const string& str, const string& delim)
 //saber cuantas cartas de un determinado color tiene
 int JuegoC::mirarmano(string color) {
 	int cont = 0;
+	
 	//Luego reemplazar este string por el arreglo de manos
-	for (int i = 0; i < ManoIA.size(); i++) {
-		if (ManoIA.at(i) == color)
+	for (int i = 0; i < ManoIAs.size(); i++) {
+		if (ManoIAs.at(i) == color || ManoIAs.at(i)==Colores::Any)
 			cont++;
 	}
 	return cont;
 }
 bool JuegoC::verificarCaminoCompleto(vector<string>vcolors, int u, int v) {
 	bool completado = false;
+	for (int i = 0; i < ManoIA.size(); i++) {
+		ManoIAs.push_back(colorIndexToString(ManoIA.at(i)));
+	}
 	for each (auto color in vcolors)
 	{
 		int pesoaux = peso(u, v);
@@ -147,7 +167,15 @@ bool JuegoC::verificarCaminoCompleto(vector<string>vcolors, int u, int v) {
 			}
 		}
 		else {
-			if (count(ManoIA.begin(), ManoIA.end(), "Yellow") == pesoaux) {
+			if (count(ManoIAs.begin(), ManoIAs.end(), Colores::Any) == pesoaux ||
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::Black) == pesoaux || 
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::Blue) == pesoaux || 
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::Green) == pesoaux || 
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::Orange) == pesoaux || 
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::Pink) == pesoaux || 
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::Red) == pesoaux || 
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::White) == pesoaux || 
+				count(ManoIAs.begin(), ManoIAs.end(), Colores::Yellow) == pesoaux) {
 				completado = true;
 			}
 		}
@@ -155,8 +183,8 @@ bool JuegoC::verificarCaminoCompleto(vector<string>vcolors, int u, int v) {
 	return completado;
 }
 
-//funcion que retorna inicializa un vector con los pesos de los caminos, el color y el puntaje de prioridad del camino a seguir
-priority_queue<Camino> JuegoC::obtener_Pesos_Costos() {
+//funcion que retorna inicializa un vector con los pesos de los caminos, el color y el puntaje de prioridad de cada camino perteneciente a la ruta
+priority_queue<Camino> JuegoC::priorizarCaminos() {
 	priority_queue<Camino> pq_caminos;
 
 	stack<ii>ss = st;
@@ -194,7 +222,7 @@ priority_queue<Camino> JuegoC::obtener_Pesos_Costos() {
 	}
 	return pq_caminos;
 }
-
+//Retorna la información del camino mas corto
 String^ JuegoC::generarStringCaminos() {
 	String^resp = "";
 	int size = st.size();
@@ -210,4 +238,60 @@ String^ JuegoC::generarStringCaminos() {
 			"] [Colores:" + colors + "]" + Environment::NewLine;
 	}
 	return resp;
+}
+
+string JuegoC::colorIndexToString(int i) {
+	switch (i) {
+	case 0:
+		return Colores::Any; break;
+	case 1:
+		return Colores::Black; break;
+	case 2:
+		return Colores::Blue; break;
+	case 3:
+		return Colores::Green; break;
+	case 4:
+		return Colores::Orange; break;
+	case 5:
+		return Colores::Pink; break;
+	case 6:
+		return Colores::Red; break;
+	case 7:
+		return Colores::White; break;
+	case 8:
+		return Colores::Yellow; break;
+	}
+}
+
+bool JuegoC::hayEnMesa(string color,int *pos) {
+	vector<string>CartasenMesas;
+	for (int i = 0; i < CartasenMesa.size(); i++){
+		CartasenMesas.push_back(colorIndexToString(CartasenMesa[i]));
+	}
+
+	for (int i = 0; i < CartasenMesas.size(); i++) {
+		if (color == CartasenMesas[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void JuegoC::escogerCarta() {
+	auto pq = priorizarCaminos();
+	while (!pq.empty()) {
+		auto caminoP = pq.top(); pq.pop();
+		int pos = -1;
+		if (caminoP.color != Colores::Any) {
+			if (hayEnMesa(caminoP.color, &pos)) {
+				CartasenMesa.erase(CartasenMesa.begin() + pos);
+				ManoIA.push_back(dictionary[caminoP.color]);
+				break;
+			}
+		}
+		else {
+			//string color = definirColorMenosImporMano();
+		}
+	}
+
 }

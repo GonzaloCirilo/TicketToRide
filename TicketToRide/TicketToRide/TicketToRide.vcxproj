@@ -139,12 +139,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArchiveManager.cpp" />
+    <ClCompile Include="Carta.cpp" />
     <ClCompile Include="frmJuego.cpp" />
     <ClCompile Include="JuegoC.cpp" />
     <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Riel.cpp" />
+    <ClCompile Include="Structs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArchiveManager.h" />
+    <ClInclude Include="Carta.h" />
     <ClInclude Include="frmJuego.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -152,6 +156,7 @@
     <ClInclude Include="Result.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Riel.h" />
     <ClInclude Include="Structs.h" />
   </ItemGroup>
   <ItemGroup>
