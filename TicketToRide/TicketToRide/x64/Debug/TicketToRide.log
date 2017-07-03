@@ -1,19 +1,4 @@
 ﻿  frmJuego.cpp
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(201): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(225): error C2065: 'newCami': undeclared identifier
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(225): error C2228: left of '.color' must have class/struct/union
-  e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(225): note: type is 'unknown-type'
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(226): error C2065: 'newCami': undeclared identifier
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(226): error C2228: left of '.est_salida' must have class/struct/union
-  e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(226): note: type is 'unknown-type'
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(227): error C2065: 'newCami': undeclared identifier
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(227): error C2228: left of '.est_llegada' must have class/struct/union
-  e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(227): note: type is 'unknown-type'
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(229): error C2065: 'newCami': undeclared identifier
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(229): error C2228: left of '.peso' must have class/struct/union
-  e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(229): note: type is 'unknown-type'
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(234): error C2065: 'newCami': undeclared identifier
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(234): error C2228: left of '.prioridad' must have class/struct/union
-  e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(234): note: type is 'unknown-type'
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(239): error C2065: 'newCami': undeclared identifier
-e:\wd\tickettoride\tickettoride\tickettoride\frmJuego.h(277): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  ArchiveManager.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
+  TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\TicketToRide\x64\Debug\TicketToRide.exe
+  TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\TicketToRide\x64\Debug\TicketToRide.pdb (Partial PDB)
