@@ -21,6 +21,9 @@ private:
 	void poner_camino(stack<ii>* st, int t);
 	int mirarmano(string color);
 	bool verificarCaminoCompleto(vector<string> vcolors, int u, int v);
+	void cogerCarta(int color, int pos);
+	int definirColorMenosImporMano(int peso);
+	string obtenerColoresDeCamino(int u, int v, int jugador);
 public:
 	Graph grafo;
 	std::vector<Estacion>estaciones;
@@ -32,13 +35,13 @@ public:
 	~JuegoC();
 	void obtnerRuta(int s, int t);
 	void asignarRielJugador(int local, int destino, string color, int owner);
-	string obtenerColoresDeCamino(int u, int v, int jugador);
 	int peso(int u, int v);
 	vector<string> split(const string & str, const string & delim);
 	priority_queue<Camino> priorizarCaminos();
 	String ^ generarStringCaminos();
 	string colorIndexToString(int i);
-	bool hayEnMesa(string color,int*pos);
+	bool hayEnMesa(string color,int *pos);
 	void escogerCarta();
+	void ReponerCartaTablero();
 };
 

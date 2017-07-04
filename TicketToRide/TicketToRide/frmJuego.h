@@ -110,6 +110,7 @@ namespace TicketToRide {
 		auto pq = objControlador->priorizarCaminos();
 		//pq.pop();
 		//Genera el string con las respuestas
+		objControlador->escogerCarta();
 		String^resp = objControlador->generarStringCaminos();
 		auto frm = gcnew Result(resp);
 		frm->Show();
