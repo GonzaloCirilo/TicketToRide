@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <map>
 typedef pair<int, int>ii;
+typedef pair<int, ii>iii;
 typedef vector<vector<Camino>>Graph;
 class JuegoC
 {
@@ -31,8 +32,11 @@ public:
 	vector<int>CartasenMesa;
 	int nEstaciones;
 	std::map<string, int> dictionary;
+	iii rutaIA, rutaJugador;
+	vector<iii> piladeRutas;
 	JuegoC();
 	~JuegoC();
+	void darRuta(int Player);
 	void obtnerRuta(int s, int t);
 	void asignarRielJugador(int local, int destino, string color, int owner);
 	int peso(int u, int v);
@@ -43,5 +47,8 @@ public:
 	bool hayEnMesa(string color,int *pos);
 	void escogerCarta();
 	void ReponerCartaTablero();
+	bool CumploCosto(Camino c);
+	bool CumploCosto(string color, int peso);
+	void RealizarJugada();
 };
 

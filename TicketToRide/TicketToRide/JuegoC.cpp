@@ -16,12 +16,15 @@ JuegoC::JuegoC()
 	dictionary.insert(make_pair(Colores::White, 7));
 	dictionary.insert(make_pair(Colores::Yellow, 8));
 	Random r;
-	ManoIA = { 8, 8, 3,5,5 };
-	CartasenMesa = { 6,7,2,2 };
-	//CartasenMesa =vector<int>(5);
-	/*for (int i = 0; i < CartasenMesa.size(); i++) {
+	ManoIA = { 5, 5, 5,5,5 };
+	//CartasenMesa = { 6,7,2,2 };
+	CartasenMesa =vector<int>(5);
+	for (int i = 0; i < CartasenMesa.size(); i++) {
 		CartasenMesa[0] = r.Next(9);
-	}*/
+	}
+	//{puntaje,{salida,llegada}}
+	piladeRutas = { {4, { 0,33 } },{ 10,{ 0,16 }}, {12,{ 11,14 }}, {13,{ 15,32 }}, {12,{ 10,12 }} };
+	random_shuffle(piladeRutas.begin(), piladeRutas.end());
 	ArchiveManager archm;
 	//Carga Estaciones
 	this->estaciones = vector<Estacion>();
@@ -35,10 +38,18 @@ JuegoC::JuegoC()
 JuegoC::~JuegoC()
 {
 }
-
+void JuegoC::darRuta(int Player) {
+	if (Player == 1) {
+		rutaIA = piladeRutas.front();
+		piladeRutas.erase(piladeRutas.begin());
+	}
+	else {
+		rutaJugador = piladeRutas.front();
+		piladeRutas.erase(piladeRutas.begin());
+	}
+}
 void JuegoC::obtnerRuta(int s,int t) {
 	links = vector<int>(nEstaciones, -1);
-	//int s = 0; int t = 33;
 	djkstra(s, &links, 1);
 	//pila para recuperar el orden de las aristas
 	st = stack<ii>();
@@ -331,10 +342,53 @@ void JuegoC::escogerCarta() {
 			}
 		}
 	}
-
 }
 //llamar esta funcion cada vez que se agarre una carta del tablero
 void JuegoC::ReponerCartaTablero() {
 	Random r;
 	CartasenMesa.push_back(r.Next(0, 9));
+}
+bool JuegoC::CumploCosto(Camino c) {
+	bool r = false;
+	vector<int>CartasEnManoIA = vector<int>(9);
+	for (int i = 0; i < ManoIA.size(); i++) {
+		CartasEnManoIA[ManoIA[i]] += 1;
+	}
+	if (CartasEnManoIA[dictionary[c.color]] >= c.peso)
+		r = true;
+	return r;
+}
+bool JuegoC::CumploCosto(string color,int peso) {
+	bool r = false;
+	vector<int>CartasEnManoIA = vector<int>(9);
+	for (int i = 0; i < ManoIA.size(); i++) {
+		CartasEnManoIA[ManoIA[i]] += 1;
+	}
+	if (CartasEnManoIA[dictionary[color]] >= peso)
+		r = true;
+	return r;
+}
+void JuegoC::RealizarJugada() {
+	auto pq = priorizarCaminos();
+	bool jugo = false;
+	while (!pq.empty() && jugo == false) {
+		auto aux = pq.top(); pq.pop();
+		if (aux.color != Colores::Any) {
+			if (CumploCosto(aux)) {
+				asignarRielJugador(aux.est_salida, aux.est_llegada, aux.color, IA);
+				jugo = true;
+			}
+		}
+		else {
+			//elijo color
+			for (int i = 0; i < 9; i++) {
+				
+				if (CumploCosto(colorIndexToString(0),aux.peso)) {
+					asignarRielJugador(aux.est_salida, aux.est_llegada, Colores::Any, IA);
+					jugo = true;
+					break;
+				}
+			}
+		}
+	}
 }

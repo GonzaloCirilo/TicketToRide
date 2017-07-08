@@ -1,8 +1,4 @@
-﻿  JuegoC.cpp
-JuegoC.cpp(192): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-JuegoC.cpp(229): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-JuegoC.cpp(247): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\tickettoride\juegoc.cpp(290): warning C4715: 'JuegoC::colorIndexToString': not all control paths return a value
+﻿  frmJuego.cpp
   ArchiveManager.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\TicketToRide\x64\Debug\TicketToRide.exe
   TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\TicketToRide\x64\Debug\TicketToRide.pdb (Partial PDB)

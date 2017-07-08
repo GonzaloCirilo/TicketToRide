@@ -90,27 +90,23 @@ namespace TicketToRide {
 		}
 #pragma endregion
 		int nEstaciones;
-	
-	void priorizarCartas(priority_queue<Camino>pilacaminos) {
+		 
 
-	}
 
 	//void priorizar caminos
 	private: System::Void frmJuego_Load(System::Object^  sender, System::EventArgs^  e) {
-		
+		Random r;
 		//Test
 		JuegoC *objControlador = new JuegoC();
-		//Prueba de asignar un riel a jugador para ver si cambia el camino mas corto
-		objControlador->asignarRielJugador(2, 33, Colores::Any, 2);
-		objControlador->asignarRielJugador(31, 9, Colores::Yellow, 2);
-		objControlador->obtnerRuta(0, 33);
-		//vertices de inicio y salida
+		//Prueba de asignar un riel a jugador para ver si cambia el camino mas cortoruta
+		objControlador->darRuta(1);//Le damos una ruta a la IA
+		objControlador->darRuta(2);	
+
 		
-		
-		auto pq = objControlador->priorizarCaminos();
-		//pq.pop();
+		objControlador->obtnerRuta(objControlador->rutaIA.second.first,objControlador->rutaIA.second.second);
 		//Genera el string con las respuestas
 		objControlador->escogerCarta();
+		objControlador->RealizarJugada();
 		String^resp = objControlador->generarStringCaminos();
 		auto frm = gcnew Result(resp);
 		frm->Show();
