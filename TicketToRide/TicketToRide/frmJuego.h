@@ -303,7 +303,7 @@ namespace TicketToRide {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoScroll = true;
 			this->BackColor = System::Drawing::Color::Sienna;
-			this->ClientSize = System::Drawing::Size(1034, 741);
+			this->ClientSize = System::Drawing::Size(1258, 741);
 			this->Controls->Add(this->lblpmaquina);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->lblpjugador);
@@ -429,6 +429,12 @@ namespace TicketToRide {
 			x += 55;
 		}
 
+		int y = 50;
+		for (int i = 0; i < objControlador->CartasenMesa.size(); i++) {
+			auto imagen = escogerImagen(objControlador->CartasenMesa[i]);
+			buffer->Graphics->DrawImage(imagen, 1100, y, 91, 45);
+			y += 55;
+		}
 
 
 
