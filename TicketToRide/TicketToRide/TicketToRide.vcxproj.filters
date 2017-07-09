@@ -36,6 +36,9 @@
     <ClCompile Include="Carta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FunCam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="frmJuego.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Carta.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FunCam.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

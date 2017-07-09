@@ -141,6 +141,7 @@
     <ClCompile Include="ArchiveManager.cpp" />
     <ClCompile Include="Carta.cpp" />
     <ClCompile Include="frmJuego.cpp" />
+    <ClCompile Include="FunCam.cpp" />
     <ClCompile Include="JuegoC.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Riel.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="frmJuego.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="FunCam.h" />
     <ClInclude Include="JuegoC.h" />
     <ClInclude Include="Result.h">
       <FileType>CppForm</FileType>

@@ -1,4 +1,5 @@
 #pragma once
+#include "FunCam.h"
 #include "Result.h"
 #include "Structs.h"
 #include "ArchiveManager.h"
@@ -53,6 +54,7 @@ namespace TicketToRide {
 		Bitmap^Red;
 		Bitmap^White;
 		Bitmap^Yellow;
+		Bitmap^Mapa;
 	private: System::Windows::Forms::PictureBox^  pcbTablero;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 	private: System::Windows::Forms::PictureBox^  pictureBox2;
@@ -123,6 +125,8 @@ namespace TicketToRide {
 			this->pcbTablero->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->pcbTablero->TabIndex = 0;
 			this->pcbTablero->TabStop = false;
+			this->pcbTablero->Visible = false;
+			this->pcbTablero->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmJuego::pcbTablero_MouseClick);
 			// 
 			// pictureBox1
 			// 
@@ -223,9 +227,9 @@ namespace TicketToRide {
 			this->label1->Location = System::Drawing::Point(9, 675);
 			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(63, 19);
+			this->label1->Size = System::Drawing::Size(14, 19);
 			this->label1->TabIndex = 9;
-			this->label1->Text = L"Turno: ";
+			this->label1->Text = L" ";
 			// 
 			// lblturno
 			// 
@@ -303,7 +307,7 @@ namespace TicketToRide {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoScroll = true;
 			this->BackColor = System::Drawing::Color::Sienna;
-			this->ClientSize = System::Drawing::Size(1258, 741);
+			this->ClientSize = System::Drawing::Size(1309, 741);
 			this->Controls->Add(this->lblpmaquina);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->lblpjugador);
@@ -323,6 +327,7 @@ namespace TicketToRide {
 			this->Name = L"frmJuego";
 			this->Text = L"frmJuego";
 			this->Load += gcnew System::EventHandler(this, &frmJuego::frmJuego_Load);
+			this->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &frmJuego::frmJuego_MouseClick);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pcbTablero))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->EndInit();
@@ -339,6 +344,7 @@ namespace TicketToRide {
 #pragma endregion
 		int nEstaciones;
 		JuegoC *objControlador = new JuegoC();
+		FunCam*objFunCam;
 
 
 	//void priorizar caminos
@@ -352,7 +358,8 @@ namespace TicketToRide {
 		Red = gcnew Bitmap(this->pictureBox6->Image);
 		White = gcnew Bitmap(this->pictureBox7->Image);
 		Yellow = gcnew Bitmap(this->pictureBox8->Image);
-
+		Mapa = gcnew Bitmap(this->pcbTablero->Image);
+		objFunCam = new FunCam();
 		Random r;
 		//Test
 		
@@ -421,20 +428,22 @@ namespace TicketToRide {
 		BufferedGraphicsContext ^espacioBuffer = BufferedGraphicsManager::Current;
 		espacioBuffer->MaximumBuffer = System::Drawing::Size(gWidth + 1, gHeigth + 1);
 		BufferedGraphics ^buffer = espacioBuffer->Allocate(g, Drawing::Rectangle(0, 0, gWidth, gHeigth));
+	
 		buffer->Graphics->FillRectangle(Brushes::Sienna, Rectangle(0, 0, gWidth, gHeigth));
+		buffer->Graphics->DrawImage(Mapa, 0, 0, 1020, 659);
 		int x = 491;
 		for (int i = 0; i < objControlador->ManoJugador.size(); i++) {
 			auto imagen = escogerImagen(objControlador->ManoJugador[i]);
 			buffer->Graphics->DrawImage(imagen, x, 665, 45, 81);
 			x += 55;
 		}
-
 		int y = 50;
 		for (int i = 0; i < objControlador->CartasenMesa.size(); i++) {
 			auto imagen = escogerImagen(objControlador->CartasenMesa[i]);
 			buffer->Graphics->DrawImage(imagen, 1100, y, 91, 45);
 			y += 55;
 		}
+		objFunCam->Dibujar(buffer->Graphics);
 
 
 
@@ -443,5 +452,13 @@ namespace TicketToRide {
 		delete g;
 		delete buffer;
 	}
+
+			
+private: System::Void pcbTablero_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	//objFunCam->dibujar_punto(e->X, e->Y);
+}
+private: System::Void frmJuego_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
+	objFunCam->dibujar_punto(e->X, e->Y);
+}
 };
 }

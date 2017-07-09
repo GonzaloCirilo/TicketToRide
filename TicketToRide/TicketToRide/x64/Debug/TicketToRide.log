@@ -1,5 +1,5 @@
 ﻿  frmJuego.cpp
-c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\tickettoride\frmjuego.h(415): warning C4715: 'TicketToRide::frmJuego::escogerImagen': not all control paths return a value
+c:\users\usuario\documents\visual studio 2015\projects\tickettoride\tickettoride\tickettoride\frmjuego.h(422): warning C4715: 'TicketToRide::frmJuego::escogerImagen': not all control paths return a value
   ArchiveManager.obj : /DEBUG:FASTLINK is not supported when managed code is present; restarting link with /DEBUG:FULL
   TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\TicketToRide\x64\Debug\TicketToRide.exe
   TicketToRide.vcxproj -> C:\Users\Usuario\Documents\Visual Studio 2015\Projects\TicketToRide\TicketToRide\x64\Debug\TicketToRide.pdb (Partial PDB)
