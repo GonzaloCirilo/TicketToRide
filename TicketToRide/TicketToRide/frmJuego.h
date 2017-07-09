@@ -105,11 +105,21 @@ namespace TicketToRide {
 		
 		objControlador->obtnerRuta(objControlador->rutaIA.second.first,objControlador->rutaIA.second.second);
 		//Genera el string con las respuestas
-		objControlador->escogerCarta();
-		objControlador->RealizarJugada();
+		/*objControlador->escogerCarta();
+		objControlador->RealizarJugada();*/
 		String^resp = objControlador->generarStringCaminos();
 		auto frm = gcnew Result(resp);
 		frm->Show();
+		int turnos = 0;
+		while (!objControlador->terminoRuta(1)) {
+			objControlador->obtnerRuta(objControlador->rutaIA.second.first, objControlador->rutaIA.second.second);
+			//Genera el string con las respuestas
+			objControlador->escogerCarta();
+			objControlador->escogerCarta();
+			objControlador->RealizarJugada();
+			turnos++;
+		}
+		MessageBox::Show("Termine"+turnos);
 	}
 	
 	};
