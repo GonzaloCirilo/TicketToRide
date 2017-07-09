@@ -34,12 +34,13 @@ public:
 	vector<int>CartasenMesa;
 	int nEstaciones;
 	std::map<string, int> dictionary;
-	iii rutaIA, rutaJugador;
+	vector<iii> rutaIA, rutaJugador;
 	vector<iii> piladeRutas;
 	vector<int>pilaCartas;
 	JuegoC();
 	~JuegoC();
 	void darRuta(int Player);
+	void JugarIA();
 	void obtnerRuta(int s, int t);
 	void asignarRielJugador(int local, int destino, string color, int owner);
 	int peso(int u, int v);
@@ -55,6 +56,6 @@ public:
 	void eliminarCartas(int jugador, int color, int peso);
 	bool verCaminoDueño(int u, int v);
 	void RealizarJugada();
-	bool terminoRuta(int owner);
+	bool terminoRuta(int owner,int u,int v);
 };
 

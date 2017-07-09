@@ -83,21 +83,31 @@ JuegoC::~JuegoC()
 }
 void JuegoC::darRuta(int Player) {
 	if (Player == IA) {
-		rutaIA = piladeRutas.front();
+		rutaIA.push_back (piladeRutas.front());
+		piladeRutas.erase(piladeRutas.begin());
+		rutaIA.push_back(piladeRutas.front());
 		piladeRutas.erase(piladeRutas.begin());
 	}
 	else {
 		if (Player == PLAYER) {
-			rutaJugador = piladeRutas.front();
+			rutaJugador.push_back(piladeRutas.front());
+			piladeRutas.erase(piladeRutas.begin());
+			rutaJugador.push_back(piladeRutas.front());
 			piladeRutas.erase(piladeRutas.begin());
 		}
+	}
+}
+void JuegoC::JugarIA() {
+	st = stack<ii>();
+	for (int i = 0; i < rutaIA.size(); i++) {
+		obtnerRuta(rutaIA[i].second.first, rutaIA[i].second.second);
 	}
 }
 void JuegoC::obtnerRuta(int s,int t) {
 	links = vector<int>(nEstaciones, -1);
 	djkstra(s, &links, 1);
 	//pila para recuperar el orden de las aristas
-	st = stack<ii>();
+	
 	st.push({ links[t],t });
 	//llenamos la pila
 	poner_camino(&st, links[t]);
@@ -504,7 +514,7 @@ void JuegoC::RealizarJugada() {
 	bool jugo = false;
 	while (!pq.empty() && jugo == false) {
 		auto aux = pq.top(); pq.pop();
-		if (!verCaminoDueño(aux.est_llegada, aux.est_salida)) {
+		if (!verCaminoDueño(aux.est_llegada, aux.est_salida) && !isSameSet(aux.est_salida,aux.est_llegada,&psetIA)) {
 			if (aux.color != Colores::Any) {
 				if (CumploCosto(aux)) {
 					asignarRielJugador(aux.est_salida, aux.est_llegada, aux.color, IA);
@@ -528,9 +538,9 @@ void JuegoC::RealizarJugada() {
 	}
 }
 
-bool JuegoC::terminoRuta(int owner) {
-	return owner == IA ? isSameSet(rutaIA.second.first, rutaIA.second.second, &psetIA) :
-								isSameSet(rutaJugador.second.first, rutaJugador.second.second, &psetJugador);
+bool JuegoC::terminoRuta(int owner,int u,int v) {
+	return owner == IA ? isSameSet(u, v, &psetIA) :
+								isSameSet(u, v, &psetJugador);
 	/*auto sts = staux;
 	bool predicade = true;
 	while(!sts.empty()){
@@ -550,3 +560,4 @@ bool JuegoC::terminoRuta(int owner) {
 }
 
 
+	

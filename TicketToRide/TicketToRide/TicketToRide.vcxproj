@@ -171,6 +171,16 @@
     <None Include="Estaciones_US.csv" />
     <None Include="Grafo_US.csv" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Amarillo.png" />
+    <Image Include="Blanco.png" />
+    <Image Include="Celeste.png" />
+    <Image Include="Gris.png" />
+    <Image Include="Negro.png" />
+    <Image Include="Rojo.png" />
+    <Image Include="Rosado.png" />
+    <Image Include="Verde.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

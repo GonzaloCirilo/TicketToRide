@@ -76,4 +76,30 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Verde.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rojo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Amarillo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Celeste.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Rosado.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Negro.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Gris.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Blanco.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
