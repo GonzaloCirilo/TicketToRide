@@ -171,7 +171,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Estaciones_US.csv" />
+    <None Include="Grafo_US-1.csv" />
     <None Include="Grafo_US.csv" />
+    <None Include="Grafo_US_1.csv" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Amarillo.png" />

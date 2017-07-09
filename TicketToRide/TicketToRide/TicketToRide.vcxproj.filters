@@ -73,6 +73,12 @@
     <None Include="Grafo_US.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Grafo_US_1.csv">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Grafo_US-1.csv">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmJuego.resx">

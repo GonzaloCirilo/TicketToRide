@@ -14,7 +14,7 @@ typedef vector<vector<Camino>>Graph;
 class JuegoC
 {
 private:
-	std::vector<int>ManoIA;
+	
 	vector<string>ManoIAs;
 	vector<int>links;//vector para el tracking del camino que toma al ejecutar djkstra
 	stack<ii>st;
@@ -28,6 +28,7 @@ private:
 	auto definirColorMenosImporMano(int peso);
 	string obtenerColoresDeCamino(int u, int v, int jugador);
 public:
+	std::vector<int>ManoIA;
 	Graph grafo;
 	std::vector<Estacion>estaciones;
 	vector<int>ManoJugador;
@@ -55,7 +56,7 @@ public:
 	bool CumploCosto(string color, int peso);
 	void eliminarCartas(int jugador, int color, int peso);
 	bool verCaminoDueño(int u, int v);
-	void RealizarJugada();
+	bool RealizarJugada();
 	bool terminoRuta(int owner,int u,int v);
 };
 

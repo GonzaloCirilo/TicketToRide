@@ -71,6 +71,7 @@ namespace TicketToRide {
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::Label^  lblpmaquina;
 	private: System::Windows::Forms::Timer^  timer1;
+	private: System::Windows::Forms::Label^  lblCaminosCompletados;
 	private: System::ComponentModel::IContainer^  components;
 	protected:
 
@@ -105,6 +106,7 @@ namespace TicketToRide {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->lblpmaquina = (gcnew System::Windows::Forms::Label());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->lblCaminosCompletados = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pcbTablero))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -227,9 +229,9 @@ namespace TicketToRide {
 			this->label1->Location = System::Drawing::Point(9, 675);
 			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(14, 19);
+			this->label1->Size = System::Drawing::Size(63, 19);
 			this->label1->TabIndex = 9;
-			this->label1->Text = L" ";
+			this->label1->Text = L" Turno:";
 			// 
 			// lblturno
 			// 
@@ -299,7 +301,18 @@ namespace TicketToRide {
 			// timer1
 			// 
 			this->timer1->Enabled = true;
+			this->timer1->Interval = 500;
 			this->timer1->Tick += gcnew System::EventHandler(this, &frmJuego::timer1_Tick);
+			// 
+			// lblCaminosCompletados
+			// 
+			this->lblCaminosCompletados->AutoSize = true;
+			this->lblCaminosCompletados->ForeColor = System::Drawing::Color::White;
+			this->lblCaminosCompletados->Location = System::Drawing::Point(1166, 41);
+			this->lblCaminosCompletados->Name = L"lblCaminosCompletados";
+			this->lblCaminosCompletados->Size = System::Drawing::Size(90, 13);
+			this->lblCaminosCompletados->TabIndex = 15;
+			this->lblCaminosCompletados->Text = L"Caminos Hechos:";
 			// 
 			// frmJuego
 			// 
@@ -307,7 +320,8 @@ namespace TicketToRide {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoScroll = true;
 			this->BackColor = System::Drawing::Color::Sienna;
-			this->ClientSize = System::Drawing::Size(1309, 741);
+			this->ClientSize = System::Drawing::Size(1326, 741);
+			this->Controls->Add(this->lblCaminosCompletados);
 			this->Controls->Add(this->lblpmaquina);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->lblpjugador);
@@ -345,6 +359,7 @@ namespace TicketToRide {
 		int nEstaciones;
 		JuegoC *objControlador = new JuegoC();
 		FunCam*objFunCam;
+		int t = 1;
 
 
 	//void priorizar caminos
@@ -368,25 +383,33 @@ namespace TicketToRide {
 		objControlador->darRuta(2);	
 		String^resp;
 		for (int i = 0; i < objControlador->rutaIA.size(); i++) {
-			objControlador->JugarIA();
+			lblCaminosCompletados->Text +=Environment::NewLine+ gcnew String (objControlador->estaciones[objControlador->rutaIA[i].second.first].nombre.c_str()) + "-"
+				+ gcnew String(objControlador->estaciones[objControlador->rutaIA[i].second.second].nombre.c_str());
 		}
-		resp = objControlador->generarStringCaminos();
+		//resp = objControlador->generarStringCaminos();
 		//objControlador->obtnerRuta(objControlador->rutaIA.second.first,objControlador->rutaIA.second.second);
 		//Genera el string con las respuestas
 		/*objControlador->escogerCarta();
 		objControlador->RealizarJugada();*/
+		resp += "Este es la implementacion de la IA para el juego Ticket To Ride" + Environment::NewLine +
+			"Se usaron los algoritmos de djkstra y UDFS." + Environment::NewLine +
+			"Tambien se usaron tecnicas greedy para la toma de decisiones" + Environment::NewLine +
+			"En esta demo la IA jugara hasta completar todos sus caminos que han sido aignados al azar"+Environment::NewLine+
+			"La captura de la posicion de los rieles esta un poco desfasada pero se observa que se las estaciones estan conectadas"
 		auto frm = gcnew Result(resp);
+		
 		frm->Show();
 		int turnos = 0;
-
-		while (!objControlador->terminoRuta(1,objControlador->rutaIA[0].second.first,objControlador->rutaIA[0].second.second)||
+		
+		/*while (!objControlador->terminoRuta(1,objControlador->rutaIA[0].second.first,objControlador->rutaIA[0].second.second)||
 				!objControlador->terminoRuta(1,objControlador->rutaIA[1].second.first,objControlador->rutaIA[1].second.second)) {
 			objControlador->JugarIA();
 			objControlador->escogerCarta();
 			objControlador->escogerCarta();
 			objControlador->RealizarJugada();
 			turnos++;
-		}
+		}*/
+		
 	}
 
 	auto escogerImagen(int color) {
@@ -428,23 +451,45 @@ namespace TicketToRide {
 		BufferedGraphicsContext ^espacioBuffer = BufferedGraphicsManager::Current;
 		espacioBuffer->MaximumBuffer = System::Drawing::Size(gWidth + 1, gHeigth + 1);
 		BufferedGraphics ^buffer = espacioBuffer->Allocate(g, Drawing::Rectangle(0, 0, gWidth, gHeigth));
-	
+
 		buffer->Graphics->FillRectangle(Brushes::Sienna, Rectangle(0, 0, gWidth, gHeigth));
 		buffer->Graphics->DrawImage(Mapa, 0, 0, 1020, 659);
 		int x = 491;
-		for (int i = 0; i < objControlador->ManoJugador.size(); i++) {
-			auto imagen = escogerImagen(objControlador->ManoJugador[i]);
+		for (int i = 0; i < objControlador->ManoIA.size(); i++) {
+			auto imagen = escogerImagen(objControlador->ManoIA[i]);
 			buffer->Graphics->DrawImage(imagen, x, 665, 45, 81);
 			x += 55;
 		}
 		int y = 50;
 		for (int i = 0; i < objControlador->CartasenMesa.size(); i++) {
 			auto imagen = escogerImagen(objControlador->CartasenMesa[i]);
-			buffer->Graphics->DrawImage(imagen, 1100, y, 91, 45);
+			buffer->Graphics->DrawImage(imagen, 1050, y, 91, 45);
 			y += 55;
 		}
-		objFunCam->Dibujar(buffer->Graphics);
 
+		if (!objControlador->terminoRuta(1, objControlador->rutaIA[0].second.first, objControlador->rutaIA[0].second.second) ||
+			!objControlador->terminoRuta(1, objControlador->rutaIA[1].second.first, objControlador->rutaIA[1].second.second)) {
+		
+		objControlador->JugarIA();
+		objControlador->escogerCarta();
+		objControlador->escogerCarta();
+		while(objControlador->RealizarJugada());
+		t++;
+		}
+		objFunCam->camino_en_coordenadas.clear();
+		for (int i = 0; i < objControlador->grafo.size(); i++) {
+			for (int j = 0; j < objControlador->grafo[i].size(); j++) {
+				auto aux = objControlador->grafo[i][j];
+				if (aux.dueño == 1) {
+					for (int k = 0; k < aux.Arreglo_Riel.size(); k++) {
+						objFunCam->dibujar_punto(aux.Arreglo_Riel[k].x, aux.Arreglo_Riel[k].y);
+					}
+				}
+			}
+		}
+
+		objFunCam->Dibujar(buffer->Graphics);
+		lblturno->Text = t.ToString();
 
 
 
@@ -458,7 +503,9 @@ private: System::Void pcbTablero_MouseClick(System::Object^  sender, System::Win
 	//objFunCam->dibujar_punto(e->X, e->Y);
 }
 private: System::Void frmJuego_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-	objFunCam->dibujar_punto(e->X, e->Y);
+	//objFunCam->dibujar_punto(e->X, e->Y);
+
+	
 }
 };
 }

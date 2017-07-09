@@ -47,7 +47,7 @@ vector<string> ArchiveManager::split(const string& str, const string& delim)
 
 void ArchiveManager::Load_Grafo(vector<vector<Camino>> *_grafo, int nEstaciones)
 {
-	char* nArchivoGrafo = "Grafo_US.csv";
+	char* nArchivoGrafo = "Grafo_US-1.csv";
 	arch.open(nArchivoGrafo);
 	string aux;
 	string linea;
@@ -61,16 +61,30 @@ void ArchiveManager::Load_Grafo(vector<vector<Camino>> *_grafo, int nEstaciones)
 			getline(ss, aux, ',');
 			if (aux == "----") { i++; continue; }
 			vector<string> cams = split(aux, "||");
-			for (int k = 1; k < cams.size(); k++) {
+			//for (int k = 1; k < cams.size(); k++) {
+			//	cam.est_salida = j;
+			//	cam.est_llegada = i;
+			//	cam.peso = atoi(cams[0].c_str());
+			//	cam.color = cams[k];
+			//	cam.dueño = 0;
+			//	//_grafo.[j].push_back(cam);
+			//	_grafo->at(j).push_back(cam);
+			//}
+			vector<string>pos = split(cams[cams.size()-1], ";");
+			for (int k = 1; k < cams.size() - 1; k++) {
+				cam = Camino();
 				cam.est_salida = j;
 				cam.est_llegada = i;
 				cam.peso = atoi(cams[0].c_str());
 				cam.color = cams[k];
+				for (int o = 0; o < 2*cam.peso; o+=2) {
+					int x = atoi(pos[o+(cam.peso*(k-1))].c_str()), y=atoi(pos[o + 1].c_str());
+					cam.Arreglo_Riel.push_back(Riel(x, y));
+				}
 				cam.dueño = 0;
 				//_grafo.[j].push_back(cam);
 				_grafo->at(j).push_back(cam);
 			}
-
 			i++;
 		} while (i<nEstaciones);
 		j++;

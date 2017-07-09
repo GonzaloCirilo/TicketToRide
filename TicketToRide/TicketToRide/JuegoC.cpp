@@ -87,6 +87,8 @@ void JuegoC::darRuta(int Player) {
 		piladeRutas.erase(piladeRutas.begin());
 		rutaIA.push_back(piladeRutas.front());
 		piladeRutas.erase(piladeRutas.begin());
+		rutaIA.push_back(piladeRutas.front());
+		piladeRutas.erase(piladeRutas.begin());
 	}
 	else {
 		if (Player == PLAYER) {
@@ -509,7 +511,7 @@ bool JuegoC::verCaminoDueño(int u,int v) {
 	}
 	return r;
 }
-void JuegoC::RealizarJugada() {
+bool JuegoC::RealizarJugada() {
 	auto pq = priorizarCaminos();
 	bool jugo = false;
 	while (!pq.empty() && jugo == false) {
@@ -536,6 +538,7 @@ void JuegoC::RealizarJugada() {
 			}
 		}
 	}
+	return false;
 }
 
 bool JuegoC::terminoRuta(int owner,int u,int v) {

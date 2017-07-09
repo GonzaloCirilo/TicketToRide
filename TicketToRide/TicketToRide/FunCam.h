@@ -7,7 +7,7 @@ typedef vector<vi>cam;
 
 class FunCam
 {
-private:
+public:
 	vector<cam>caminos;
 	vi camino_en_coordenadas;
 	int x, y;
@@ -22,7 +22,7 @@ public:
 
 	void Dibujar(Graphics^gr) {
 		for (int i = 0; i < this->camino_en_coordenadas.size(); i += 2) {
-			gr->DrawEllipse(gcnew Pen(Color::Red), camino_en_coordenadas[i], this->camino_en_coordenadas[i + 1], 50, 50);
+			gr->FillEllipse(Brushes::Purple, camino_en_coordenadas[i], this->camino_en_coordenadas[i + 1], 5, 5);
 		}
 	};
 	void dibujar_punto(int x, int y) {
